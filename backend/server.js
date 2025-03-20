@@ -3,17 +3,26 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const https = require("https");
-const config = require("./config");
-const sql = require("mssql"); // Importar el paquete mssql
-const path = require('path');
+const sql = require("mssql");
+const path = require("path");
 
 const PORT = process.env.PORT || 3000;
-const HOST = '0.0.0.0';
+const HOST = "0.0.0.0";
 
 const app = express();
-app.use(express.json()); 
+app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
+
+// 🔹 Configuración de SAP eliminando config.js
+const SAP_BASE_URL = "https://26.105.36.174:50000/b1s/v1";
+const COMPANIES = [
+    { id: "ZZ_ANDEANPOWER_20250303", name: "Andean Power (2025)" },
+    { id: "ZZ_PALLCAPOWER_20250225", name: "Pallca Power prueba" }
+];
+
+const SAP_USER = "manager";  // Definir usuario SAP (ajustar según sea necesario)
+const SAP_PASSWORD = "Andean2024$$";  // Definir contraseña SAP
 
 // Configurar Axios para aceptar certificados autofirmados
 const axiosInstance = axios.create({
@@ -25,9 +34,9 @@ let activeSessions = {};
 
 // ✅ Nueva ruta para obtener empresas disponibles
 app.get("/api/empresas", (req, res) => {
-    const empresasConAlias = config.COMPANIES.map(emp => ({
-        id: emp.id, 
-        name: emp.name 
+    const empresasConAlias = COMPANIES.map(emp => ({
+        id: emp.id,
+        name: emp.name
     }));
     res.json(empresasConAlias);
 });
@@ -40,7 +49,7 @@ const isSessionValid = async (empresa) => {
     }
 
     try {
-        await axiosInstance.get(`${config.SAP_BASE_URL}/CompanyService_GetCurrentCompany`, {
+        await axiosInstance.get(`${SAP_BASE_URL}/CompanyService_GetCurrentCompany`, {
             headers: { "Cookie": `B1SESSION=${session.sessionId}` },
         });
         return true;
@@ -58,7 +67,7 @@ const loginToSAP = async (empresa, usuario, password) => {
 
     try {
         // 🔹 Conectar a SAP
-        const response = await axiosInstance.post(`${config.SAP_BASE_URL}/Login`, {
+        const response = await axiosInstance.post(`${SAP_BASE_URL}/Login`, {
             CompanyDB: empresa,
             UserName: usuario,
             Password: password,
@@ -74,10 +83,10 @@ const loginToSAP = async (empresa, usuario, password) => {
 
         // 🔹 Configuración de SQL con la base de datos SAP seleccionada
         const sqlConfig = {
-            user: "sa", 
+            user: "sa",
             password: "Andean2024$$",
-            server: "26.105.36.174", 
-            database: empresa, 
+            server: "26.105.36.174",
+            database: empresa,
             options: {
                 encrypt: false,
                 trustServerCertificate: true,
@@ -105,7 +114,7 @@ setInterval(async () => {
         if (!(await isSessionValid(empresa))) {
             console.log(`♻️ Renovando sesión para ${empresa}`);
             try {
-                activeSessions[empresa].sessionId = await loginToSAP(empresa, config.SAP_USER, config.SAP_PASSWORD);
+                activeSessions[empresa].sessionId = await loginToSAP(empresa, SAP_USER, SAP_PASSWORD);
             } catch (error) {
                 console.error(`❌ Error al renovar sesión de ${empresa}:`, error.response?.data || error.message);
             }
@@ -122,16 +131,16 @@ app.post("/api/login", async (req, res) => {
     }
 
     console.log("🔍 Empresa recibida:", empresa);
-   
-    // 🔹 Buscar el ID real en config.js ignorando mayúsculas y espacios
-    const empresaReal = config.COMPANIES.find(e => e.name.toLowerCase().trim() === empresa.toLowerCase().trim())?.id;
-    
+
+    // 🔹 Buscar el ID real en la configuración ignorando mayúsculas y espacios
+    const empresaReal = COMPANIES.find(e => e.name.toLowerCase().trim() === empresa.toLowerCase().trim())?.id;
+
     if (!empresaReal) {
         return res.status(400).json({ error: "Empresa no válida." });
     }
 
     try {
-        const sessionId = await loginToSAP(empresaReal, usuario, password);      
+        const sessionId = await loginToSAP(empresaReal, usuario, password);
         res.json({ success: true, message: "Inicio de sesión exitoso", redirectTo: "/menu.html" });
     } catch (error) {
         res.status(500).json({ error: "Error al conectar a SAP", details: error.response?.data || error.message });
@@ -323,5 +332,5 @@ app.get("/", (req, res) => {
 
 
 app.listen(PORT, HOST, () => {
-    console.log(`0 Servidor corriendo en http://${HOST}:${PORT}`);
+    console.log(`1 Servidor corriendo en http://${HOST}:${PORT}`);
 });
