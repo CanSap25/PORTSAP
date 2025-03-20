@@ -314,11 +314,11 @@ app.post("/api/crearFactura", async (req, res) => {
     }
 });
 
-// Servir archivos estáticos desde la carpeta correcta
-app.use(express.static(path.join(__dirname, "backend", "public")));
+// ✅ Servir archivos estáticos desde `public/`, sin backend/backend
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "backend", "public", "index.html"));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 
