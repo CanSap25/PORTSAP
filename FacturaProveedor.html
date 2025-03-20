@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura de Proveedor</title>
+    <link rel="stylesheet" href="styles.css">    
+</head>
+<body>
+    <div class="ventana-factura">
+        <h2>Factura de Proveedor</h2>
+        <form id="facturaForm" data-empresa="">
+            <!-- Fila de Proveedor, Tipo de Documento, Serie y Correlativo -->
+            <div class="campo-fila">
+                <div class="campo">
+                    <label for="proveedor">Proveedor</label>
+                    <input type="text" id="proveedor" placeholder="Ingrese el proveedor">
+                </div>
+                <div class="campo">
+                    <label for="tipoDocumento">Tipo de Documento</label>
+                    <input type="text" id="tipoDocumento" placeholder="Ingrese el tipo de documento">
+                </div>
+                <div class="campo">
+                    <label for="serie">Serie del Documento</label>
+                    <input type="text" id="serie" placeholder="Ingrese la serie">
+                </div>
+                <div class="campo">
+                    <label for="correlativo">Correlativo del Documento</label>
+                    <input type="text" id="correlativo" placeholder="Ingrese el correlativo">
+                </div>
+            </div>
+    
+            <!-- Fila de las fechas -->
+            <div class="campo-fila">
+                <div class="campo">
+                    <label for="fechaContabilizacion">Fecha de Contabilización</label>
+                    <input type="date" id="fechaContabilizacion">
+                </div>
+                <div class="campo">
+                    <label for="fechaVencimiento">Fecha de Vencimiento</label>
+                    <input type="date" id="fechaVencimiento">
+                </div>
+                <div class="campo">
+                    <label for="fechaDocumento">Fecha del Documento</label>
+                    <input type="date" id="fechaDocumento">
+                </div>
+            </div>
+    
+            <!-- Fila de Glosa y NumAtCard -->
+            <div class="campo-fila">
+                <div class="campo">
+                    <label for="glosa">Glosa</label>
+                    <input type="text" id="glosa" placeholder="Descripción de la factura">
+                </div>
+                <div class="campo">
+                    <label for="numAtCard">Número de Referencia</label>
+                    <input type="text" id="numAtCard" placeholder="Ingrese el número de referencia">
+                </div>                   
+              
+            <!-- Campos ocultos -->
+            <input type="hidden" id="paymentGroupCode" value="-1">
+            <input type="hidden" id="indicator" value="01">
+              </form>
+                  </div>
+           
+             <!-- Fila del detalle -->
+            <div class="detalle-producto">
+                <h3>Detalle de Artículos</h3>
+                <div class="contenedor-tabla">
+                    <table id="tablaArticulos">
+                        <thead>
+                            <tr>
+                                <th>Linea Orden</th>
+                                <th>Código Artículo</th>
+                                <th>Descripción Artículo</th>
+                                <th>Cantidad Orden</th>
+                                <th>Precio Unitario</th>
+                                <th>Total Línea Orden</th>  
+                                <th>DocEntryOrden</th> 
+                                <th>% Dscto.</th>
+                                <th>Impuesto</th>
+                                <th>Sujeto a retención de impuesto</th>
+                                <th>Cuenta de mayor</th>
+                                <th>Código de unidad de medida</th>
+                                <th>Especialista</th>
+                                <th>Estado</th>
+                                <th>Asiento de Provisión</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Las filas se agregarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="comentarios">Comentarios</label>
+                <textarea id="comentarios" placeholder="Ingrese comentarios adicionales"></textarea>
+            </div>
+
+            <div class="factura-proveedor-buttons">
+                <button type="button" class="btn-factura btn-factura-crear" id="btnCrearFactura">Crear</button>
+                <!-- Input oculto para seleccionar el archivo XML -->
+              <input type="file" id="archivoXML" accept=".xml" style="display: none;">
+              <!-- Botón modificado para cargar XML -->
+              <button type="button" class="btn-factura btn-factura-cargar" id="btnCargarXML">Cargar XML</button>
+            </div>
+        </form>
+        <div id="mensajeRespuesta" class="mensaje"></div>
+    </div>
+
+  <!-- Enlace al script externo -->
+  <script>
+         // ================================================================================
+         // 🔹 FUNCIÓN PARA CARGAR EL DETALLE DE LA ORDEN DE COMPRA A LA FACTURA
+         // ================================================================================
+
+        // Cargar detalles guardados en la factura
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Cargar detalles guardados en la factura
+        const detallesGuardados = localStorage.getItem("detallesFactura");
+        if (detallesGuardados) {
+            try {
+                const detalles = JSON.parse(detallesGuardados);
+                if (Array.isArray(detalles)) {
+                    const tbody = document.querySelector("#tablaArticulos tbody");
+                    detalles.forEach(detalle => {
+                        const rowHTML = `
+                            <tr>
+                                <td>${detalle.LineaOrden}</td>
+                                <td>${detalle.CodigoArticulo}</td>
+                                <td>${detalle.DescripcionArticulo}</td>
+                                <td contenteditable="true">${detalle.CantidadOrden}</td>
+                                <td contenteditable="true">${parseFloat(detalle.PrecioUnitario).toFixed(2)}</td>
+                                <td contenteditable="true">${parseFloat(detalle.TotalLineaOrden).toFixed(2)}</td>
+                                <td contenteditable="true">${detalle.DocEntryOrden || '0%'}</td>
+                                <td contenteditable="true">${detalle.Descuento || ''}</td>
+                                <td contenteditable="true">${detalle.Impuesto || '0%'}</td>
+                                <td contenteditable="true">${detalle.SujetoRetencion || 'No'}</td>
+                                <td contenteditable="true">${detalle.CuentaMayor || ''}</td>
+                                <td contenteditable="true">${detalle.CodigoUnidadMedida || ''}</td>
+                                <td contenteditable="true">${detalle.Especialista || ''}</td>
+                                <td>${detalle.Estado || ''}</td>
+                                <td>${detalle.AsientoProvision || ''}</td>
+                                <td><button type="button" class="btn-eliminar" onclick="eliminarFila(this)">Eliminar</button></td>
+                            </tr>`; 
+                        tbody.insertAdjacentHTML("beforeend", rowHTML);
+                    });
+
+                    // Escuchar cambios en las celdas editables
+                    document.querySelectorAll("#tablaArticulos tbody td[contenteditable='true']").forEach(cell => {
+                        cell.addEventListener("input", function () {
+                            guardarCambiosEnLocalStorage();
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error("Error al cargar los detalles desde localStorage:", error);
+            }
+        }
+    });
+
+    function guardarCambiosEnLocalStorage() {
+        const filas = document.querySelectorAll("#tablaArticulos tbody tr");
+        const detalles = [];
+        
+        filas.forEach(fila => {
+            const celdas = fila.querySelectorAll("td");
+            detalles.push({
+                LineaOrden: celdas[0].innerText,
+                CodigoArticulo: celdas[1].innerText,
+                DescripcionArticulo: celdas[2].innerText,
+                CantidadOrden: celdas[3].innerText,
+                PrecioUnitario: celdas[4].innerText,
+                TotalLineaOrden: celdas[5].innerText,
+                DocEntryOrden: celdas[6].innerText,
+                Descuento: celdas[7].innerText,
+                Impuesto: celdas[8].innerText,
+                SujetoRetencion: celdas[9].innerText,
+                CuentaMayor: celdas[10].innerText,
+                CodigoUnidadMedida: celdas[11].innerText,
+                Especialista: celdas[12].innerText,
+                Estado: celdas[13].innerText,
+                AsientoProvision: celdas[14].innerText
+            });
+        });
+
+        localStorage.setItem("detallesFactura", JSON.stringify(detalles));
+    }
+
+    function eliminarFila(boton) {
+        const fila = boton.parentNode.parentNode;
+        fila.remove();
+        guardarCambiosEnLocalStorage();
+    }
+
+         
+        // Crear factura
+document.getElementById("btnCrearFactura").addEventListener("click", async (event) => {
+    event.preventDefault(); 
+
+    const proveedor = document.getElementById("proveedor").value;
+    const fechaContabilizacion = document.getElementById("fechaContabilizacion").value;
+    const fechaVencimiento = document.getElementById("fechaVencimiento").value;
+    const fechaDocumento = document.getElementById("fechaDocumento").value;
+    const correlativo = document.getElementById("correlativo").value;
+    const tipoDocumento = document.getElementById("tipoDocumento").value;
+    const serie = document.getElementById("serie").value;
+    const numAtCard = document.getElementById("numAtCard").value;
+    const comentarios = document.getElementById("comentarios").value;
+
+    const tabla = document.querySelector("#tablaArticulos tbody");
+    const filas = tabla.querySelectorAll("tr");
+    let detallesFactura = [];
+
+    filas.forEach(fila => {
+        const celdas = fila.querySelectorAll("td");
+        detallesFactura.push({
+            LineaOrden: parseInt(celdas[0].innerText),
+            CodigoArticulo: celdas[1].innerText,
+            DescripcionArticulo: celdas[2].innerText,
+            CantidadOrden: parseFloat(celdas[3].innerText),
+            PrecioUnitario: parseFloat(celdas[4].innerText),
+            TotalLineaOrden: parseFloat(celdas[5].innerText),
+            DocEntryOrden: celdas[6].innerText,
+            Descuento: parseFloat(celdas[7].innerText) || 0,
+            Impuesto: parseFloat(celdas[8].innerText) || 0,
+            CuentaMayor: celdas[10].innerText,
+            CodigoUnidadMedida: celdas[11].innerText,
+            BaseType: 22 // **Forzar que siempre se incluya**
+        });
+    });
+
+    if (!proveedor || !fechaContabilizacion || !fechaVencimiento || !fechaDocumento || !tipoDocumento || !serie || detallesFactura.length === 0) {
+        const mensajeRespuesta = document.getElementById("mensajeRespuesta");
+        mensajeRespuesta.innerText = "Por favor, complete todos los campos obligatorios.";
+        mensajeRespuesta.style.color = "red";
+        return;
+    }
+
+    const factura = { 
+        proveedor, 
+        fechaContabilizacion, 
+        fechaVencimiento, 
+        fechaDocumento, 
+        correlativo, 
+        tipoDocumento, 
+        serie, 
+        numAtCard, 
+        comentarios, 
+        detallesFactura 
+    };
+
+    console.log("📌 Enviando factura:", JSON.stringify(factura, null, 2));
+
+    const mensajeRespuesta = document.getElementById("mensajeRespuesta");
+
+    try {
+        mensajeRespuesta.innerText = "Cargando... Por favor, espere.";
+        mensajeRespuesta.style.color = "orange";
+
+        const response = await fetch("http://localhost:3000/api/crearFactura", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(factura)
+        });
+
+        const data = await response.json();
+        console.log("📌 Respuesta de SAP:", data);
+
+               if (data.success) {
+               mensajeRespuesta.innerText = `Factura creada en SAP correctamente.`;
+               mensajeRespuesta.style.color = "green";
+
+              // Redirigir después de 3 segundos
+              setTimeout(() => {
+               window.location.href = "ConsultaOrdendeCompra.html";
+               }, 1000);
+
+        } else {
+            mensajeRespuesta.innerText = `Error al crear la factura en SAP: ${data.error || 'Error desconocido.'}`;
+            mensajeRespuesta.style.color = "red";
+        }
+    } catch (error) {
+        console.error("❌ Error al conectar con el servidor:", error);
+        mensajeRespuesta.innerText = `Error al conectar con el servidor: ${error.message}.`;
+        mensajeRespuesta.style.color = "red";
+    }
+});
+
+     // ================================================================================
+       // 🔹 FUNCIÓN PARA CARGAR Y PROCESAR ARCHIVO XML PARA LLENAR FORMULARIO DE FACTURA
+       // ================================================================================
+
+// Evento para abrir el explorador de archivos al hacer clic en el botón
+document.getElementById("btnCargarXML").addEventListener("click", function () {
+    document.getElementById("archivoXML").click();
+});
+
+// Evento para detectar cuando el usuario selecciona un archivo XML
+document.getElementById("archivoXML").addEventListener("change", function (event) {
+    const archivo = event.target.files[0];
+
+    if (!archivo) {
+        console.log("No se seleccionó ningún archivo.");
+        return;
+    }
+
+    // Verificar que el archivo sea XML
+    if (archivo.type !== "text/xml" && !archivo.name.endsWith(".xml")) {
+        alert("Por favor, seleccione un archivo en formato XML.");
+        event.target.value = ""; // Limpiar el input
+        return;
+    }
+
+    console.log("📂 Archivo XML seleccionado:", archivo.name);
+
+    // Leer el contenido del archivo XML
+    const lector = new FileReader();
+    lector.onload = function (e) {
+        const contenidoXML = e.target.result;
+        procesarXML(contenidoXML);
+    };
+    lector.readAsText(archivo);
+});
+
+// ================================================================================
+// 🔹 FUNCIÓN PARA PROCESAR EL XML Y LLENAR LOS CAMPOS DEL FORMULARIO
+// ================================================================================
+
+function procesarXML(xmlString) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+    // Extraer datos del XML
+    const proveedor = xmlDoc.querySelector("cac\\:PartyIdentification cbc\\:ID, PartyIdentification ID")?.textContent || "";
+    const issueDate = xmlDoc.querySelector("cbc\\:IssueDate, IssueDate")?.textContent || "";
+    const invoiceTypeCode = xmlDoc.querySelector("cbc\\:InvoiceTypeCode, InvoiceTypeCode")?.textContent || "";
+    const idFull = xmlDoc.querySelector("cbc\\:ID, ID")?.textContent || "";
+
+    // Procesar la serie y el correlativo
+    let serie = "";
+    let correlativo = "";
+    if (idFull.includes("-")) {
+        [serie, correlativo] = idFull.split("-");
+    }
+
+    // Llenar los campos en el formulario
+    document.getElementById("proveedor").value = proveedor;
+    document.getElementById("fechaDocumento").value = issueDate;
+    document.getElementById("fechaContabilizacion").value = issueDate;
+    document.getElementById("fechaVencimiento").value = issueDate;
+    document.getElementById("tipoDocumento").value = invoiceTypeCode;
+    document.getElementById("serie").value = serie;
+    document.getElementById("correlativo").value = correlativo;
+
+    // Corregir el Número de Referencia
+    if (invoiceTypeCode && serie && correlativo) {
+        document.getElementById("numAtCard").value = `${invoiceTypeCode}-${serie}-${correlativo}`;
+    }
+
+    console.log("✅ XML procesado y formulario actualizado.");
+}
+    // Eliminar fila
+    window.eliminarFila = function(boton) {
+        console.log("Eliminando fila..."); // Mensaje cuando se elimina una fila
+        boton.closest("tr").remove();
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,772 @@
+/* ============================ */
+/*         ESTILO GENERAL       */
+/* ============================ */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f9;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Logo */
+.logo {
+    width: 180px;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+/* ============================ */
+/*       CONTENEDOR LOGIN       */
+/* ============================ */
+.login-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.left-side {
+    width: 55%;
+    background: url('Imagenes/fondo.jpg') no-repeat center center/cover;
+}
+
+.right-side {
+    width: 45%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #ffcc00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #e6b800;
+}
+
+p {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.footer-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
+/* ============================ */
+/*         MENÚ SUPERIOR        */
+/* ============================ */
+#menu-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#menu-wrapper .navbar {
+    background: linear-gradient(90deg, #002b49, #8b0000);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+#menu-wrapper .menu {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    right: 20px;
+}
+
+#menu-wrapper .menu li {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#menu-wrapper .menu li:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+#menu-wrapper .menu a {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+#menu-wrapper .submenu {
+    list-style: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: #003d63;
+    width: 180px;
+    display: none;
+    box-shadow: 0px 4px 8px rgba(97, 27, 27, 0.2);
+    border-radius: 5px;
+}
+
+#menu-wrapper .menu li:hover .submenu {
+    display: block;
+}
+
+#menu-wrapper .has-submenu::after {
+    content: "▼";
+    font-size: 10px;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+#menu-wrapper .has-submenu:hover::after {
+    transform: rotate(180deg);
+}
+
+
+/* ============================ */
+/*   CONSULTA ÓRDENES COMPRA   */
+/* ============================ */
+
+/* Centrado en la ventana */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 95%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* Caja principal */
+.consulta-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    text-align: center;
+}
+
+/* Botón Regresar */
+#btnRegresar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: auto;
+}
+
+#btnRegresar:hover {
+    background: #c82333;
+}
+
+/* Título */
+h2 {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Alinear el label, textbox y botón */
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Espacio entre los elementos */
+    margin: 20px 0;
+}
+
+/* Etiqueta de Proveedor */
+.label-proveedor {
+    font-weight: bold;
+    font-size: 14px; /* Tamaño más pequeño */
+}
+
+/* Textbox */
+.input-proveedor {
+    padding: 6px;
+    width: 180px; /* Ancho del textbox más adecuado */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px; /* Tamaño de fuente adecuado */
+}
+
+/* Botón Consultar */
+.btn-consultar {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; /* Tamaño pequeño para el botón */
+    min-width: 100px; /* Asegura un tamaño pequeño pero visible */
+}
+
+.btn-consultar:hover {
+    background: #218838;
+}
+
+/* === TABLA CONSULTA ÓRDENES COMPRA === */
+.grid-container {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+#tablaOrdenes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#tablaOrdenes th {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    background: #d6d6d6;
+    color: black;
+}
+
+#tablaOrdenes td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-weight: normal;
+}
+
+#tablaOrdenes tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-proveedor {
+        width: 100%;
+    }
+
+    .btn-consultar {
+        width: auto;
+        min-width: 120px;
+    }
+}
+
+
+
+/* ============================ */
+/*       VENTANA FLOTANTE       */
+/* ============================ */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.modal-content {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 1200px; /* Aumentado a 1200px para más espacio */
+    max-height: 90%; /* Mantener altura flexible */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título centrado y botón de cerrar (X) fijo en la parte superior */
+.modal-content h2 {
+    text-align: center;
+    font-size: 18px; /* Aumentado para mayor legibilidad */
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Contenedor de la tabla con scroll horizontal */
+.modal-body {
+    overflow-x: auto; /* Permite desplazamiento horizontal */
+    flex: 1;
+}
+
+/* Botones dentro de la ventana flotante */
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px; /* Botón Crear más pequeño */
+}
+
+.modal-buttons button:hover {
+    background: #0056b3;
+}
+
+/* === TABLA DETALLE EN VENTANA FLOTANTE === */
+#tablaDetalle {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    table-layout: auto; /* Para que las columnas se ajusten al contenido */
+    word-wrap: break-word;
+}
+
+#tablaDetalle th, #tablaDetalle td {
+    border: 1px solid #ddd;
+    padding: 8px; /* Reducido el padding para que la tabla se vea más compacta */
+    text-align: center;
+    font-weight: normal;
+    font-size: 12px; /* Reducido el tamaño del texto en las celdas */
+}
+
+#tablaDetalle th {
+    background: #f2f2f2;
+    color: black;
+    font-weight: bold;
+    white-space: nowrap; /* Evitar que el texto se desborde */
+}
+
+#tablaDetalle tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Estilo para el checkbox más pequeño */
+.checkboxSeleccion {
+    width: 14px;  /* Ancho del checkbox */
+    height: 14px; /* Alto del checkbox */
+    margin: 0;    /* Eliminar márgenes */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        max-width: 100%;
+        max-height: 80%;
+    }
+
+    #tablaDetalle {
+        font-size: 10px; /* Texto aún más pequeño para pantallas pequeñas */
+        width: 100%; /* Asegura que la tabla ocupe todo el espacio disponible */
+    }
+
+    .modal-buttons button {
+        min-width: 100px;
+    }
+}
+
+
+/* ============================ */
+/*         RESPONSIVE           */
+/* ============================ */
+@media (max-width: 768px) {
+    .login-wrapper {
+        flex-direction: column;
+    }
+    
+    .left-side {
+        display: none;
+    }
+    
+    .right-side {
+        width: 100%;
+    }
+    
+    .logo {
+        width: 150px;
+        top: 20px;
+        left: 20px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .menu {
+        flex-direction: column;
+        align-items: center;
+        right: 0;
+    }
+
+    .submenu {
+        position: relative;
+        width: 100%;
+    }
+}
+
+/* ============================ */
+/*  Estilos Generales para la Ventana de Factura  */
+/* ============================ */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.ventana-factura {
+    width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ============================ */
+/*   Estilo para los Campos de Entrada y Estructura */
+/* ============================ */
+
+.campo-fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.campo {
+    flex: 1;
+}
+
+.campo label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 13px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: #007bff;
+    background-color: #fff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+.campo textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+/* ============================ */
+/*   Estilo para la tabla de artículos (compacta) */
+/* ============================ */
+.detalle-producto {
+    margin-bottom: 20px;
+}
+
+.detalle-producto h3 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Contenedor con scroll horizontal */
+.contenedor-tabla {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 10px;
+    border-radius: 6px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste de la tabla compacta */
+table {
+    min-width: 800px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 10px; /* Letra más pequeña */
+}
+
+table th, table td {
+    padding: 6px; /* Espacio más compacto */
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #56606b;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11px;
+    text-align: center;
+    padding: 6px;
+}
+
+table td {
+    font-size: 12px;
+    padding: 5px;
+}
+
+/* Inputs dentro de la tabla */
+table td input {
+    width: 100%;
+    padding: 5px;
+    font-size: 11px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    text-align: right;
+}
+
+/* Filas alternas con color */
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Botón de eliminar más pequeño */
+button.btn-eliminar {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 4px 8px; /* Botón más compacto */
+    font-size: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button.btn-eliminar:hover {
+    background-color: #d32f2f;
+}
+
+/* Botón para agregar fila más pequeño */
+button#btnAgregarFila {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.3s ease;
+    font-size: 12px;
+}
+
+button#btnAgregarFila:hover {
+    background-color: #218838;
+}
+
+/* ============================ */
+/*   Responsividad para Dispositivos Pequeños */
+/* ============================ */
+
+@media (max-width: 768px) {
+    .ventana-factura {
+        width: 95%;
+    }
+
+    .campo-fila {
+        flex-direction: column;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    table th, table td {
+        padding: 4px;
+        font-size: 10px;
+    }
+
+    button.btn-eliminar {
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-group button {
+        min-width: 100px;
+        margin-bottom: 10px;
+    }
+}
+/* ============================ */
+/*   Estilo para los botones Crear y Buscar */
+/* ============================ */
+/* Contenedor de botones */
+.factura-proveedor-buttons {
+    display: flex;
+    justify-content: flex-end; /* Alinea a la derecha */
+    gap: 10px; /* Espaciado entre botones */
+    margin-top: 10px; /* Espacio después del textarea */
+}
+
+.btn-factura {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-factura-crear {
+    background-color: #ffc107;
+    color: black;
+}
+
+.btn-factura-buscar {
+    background-color: #ffc107;
+    color: black;
+}
+/* campo comentario*/
+.campo-fila {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.campo {
+    flex: 1;
+    margin-right: 10px;
+}
+.campo:last-child {
+    margin-right: 0;
+}
+.campo input[type="date"] {
+    width: 100%;
+}
+/* Estilo para hacer el campo de comentarios más pequeño */
+#comentarios {
+    width: 150px; /* Ajusta el ancho según lo necesites */
+    height: 30px; /* Ajusta la altura según lo necesites */
+    resize: none; /* Evita que el usuario cambie el tamaño */
+}

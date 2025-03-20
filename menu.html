@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú SAP Business One</title>
+    
+    <!-- Enlace a CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome para iconos -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <!-- Contenedor del Menú -->
+    <div id="menu-wrapper">
+        <nav class="navbar">
+
+            <!-- Logo de la empresa -->
+            <div class="logo-container">
+                <img src="Imagenes/logo.png" alt="Logo SAP" class="logo">
+            </div>
+
+            <!-- Lista de menú -->
+            <ul class="menu">
+
+                <!-- Ventas -->
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-chart-line"></i> Ventas</a>
+                    <ul class="submenu">
+                        <li><a href="OfertasVentas.html">Ofertas de Ventas</a></li>
+                        <li><a href="Entregas.html">Entregas</a></li>
+                        <li><a href="FacturaProveedor.html">Facturas de Clientes</a></li>
+                        <li><a href="CrearFacturaClientes.html">Crear Factura de Clientes</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Compras -->
+                <li class="has-submenu">
+                    <a href="#"><i class="fas fa-shopping-cart"></i> Compras</a>
+                    <ul class="submenu">
+                        <li><a href="ConsultaOrdendeCompra.html">Pedido</a></li>
+                        <li><a href="#">Oferta de Compra</a></li>
+                        <li><a href="#">Pedido de Entrada de Mercancías</a></li>
+                        <li><a href="FacturaProveedor.html">Factura de Proveedor</a></li>
+                    </ul>
+                </li>
+
+                <!-- Otras opciones -->
+                <li><a href="#"><i class="fas fa-users"></i> Socios de negocio</a></li>
+                <li><a href="#"><i class="fas fa-link"></i> Enlaces útiles</a></li>
+                <li><a href="#"><i class="fas fa-cogs"></i> Objetos definidos por usuario</a></li>
+                <li><a href="#"><i class="fas fa-table"></i> Tablas definidas por usuario</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <header>
+            <h1>Panel de Control</h1>
+        </header>
+    </div>
+
+</body>
+</html>

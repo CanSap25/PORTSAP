@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Órdenes de Compra</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="container">
+        
+        <!-- Sección de consulta de órdenes -->
+        <div class="consulta-box">
+            
+            <!-- Encabezado con título y botón de regreso -->
+            <div class="header">
+                <h2>Consulta de Órdenes de Compra de Proveedor</h2>
+                <button id="btnRegresar" title="Volver al menú">Regresar</button>
+            </div>
+            
+            <!-- Grupo de entrada de datos -->
+            <div class="input-group">
+                <label for="txtProveedor" class="label-proveedor">Ingrese Proveedor:</label>
+                <input type="text" id="txtProveedor" placeholder="Ej: 20123456789" class="input-proveedor">
+                <button id="btnConsultar" title="Consultar órdenes de compra" class="btn-consultar">Consultar</button>
+            </div>
+
+            <!-- Mensaje de carga -->
+            <div id="loadingMessage" style="display: none;">Consultando órdenes de compra...</div>
+
+            <!-- Tabla de órdenes de compra -->
+            <div class="grid-container">
+                <table id="tablaOrdenes">
+                    <thead>
+                        <tr>
+                            <th>N° Orden</th>
+                            <th>Fecha Orden</th>
+                            <th>Código Proveedor</th>
+                            <th>Nombre Proveedor</th>
+                            <th>Monto Orden</th>
+                            <th>Estado Orden</th>
+                            <th>DocEntryOrden</th> <!-- Nueva columna -->
+                            <th>Cantidad Facturas Asociadas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ventana Flotante - Modal de Detalles de la Orden -->
+    <div id="modalDetalle" class="modal">
+        <div class="modal-content">
+            
+            <!-- Botón de cerrar -->
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2>Detalles de la Orden Compra</h2>
+            
+            <!-- Contenedor con scroll para la tabla de detalles -->
+            <div class="modal-body">
+                <table id="tablaDetalle">
+                    <thead>
+                        <tr>
+                            <th>Selección</th> <!-- Nueva columna para checkbox -->
+                            <th>Línea Orden</th>
+                            <th>Código Artículo</th>
+                            <th>Descripción Artículo</th>
+                            <th>Cantidad Orden</th>
+                            <th>Precio Unitario</th>
+                            <th>Total Línea Orden</th>
+                            <th>DocEntry Orden</th>
+                            <th>Nro Factura</th>
+                            <th>Línea Factura</th>
+                            <th>Cantidad Facturada</th>
+                            <th>Precio Unitario Facturado</th>
+                            <th>Total Línea Facturada</th>
+                            <th>Estado Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Botón de acción -->
+            <div class="modal-buttons">
+                <button id="btnCrear1">Crear Factura</button>           
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlace al script externo -->
+    <script src="script.js"></script>
+</body>
+</html>

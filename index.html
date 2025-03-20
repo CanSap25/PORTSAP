@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login SAP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Logo de la empresa -->
+    <img src="Imagenes/logo.png" alt="Logo SAP" class="logo">
+
+    <!-- Contenedor principal del login -->
+    <div class="login-wrapper">       
+
+        <!-- Sección izquierda (puede ser usada para diseño) -->
+        <div class="left-side"></div>   
+
+        <!-- Sección derecha (Formulario de inicio de sesión) -->
+        <div class="right-side">
+            <div class="login-container">
+                
+                <!-- Título del formulario -->
+                <h2>Iniciar Sesión</h2>
+
+                <!-- Formulario de login -->
+                <form id="loginForm">
+
+                    <!-- Selección de servidor -->
+                    <label for="servidor">Servidor:</label>
+                    <select id="servidor" name="servidor">
+                        <option value="SAPBO01">SAPBO01</option>
+                    </select>
+
+                    <!-- Selección de empresa -->
+                    <label for="empresa">Empresa:</label>
+                    <select id="empresa" name="empresa">
+                        <option value="">Seleccione una empresa</option>
+                    </select>
+
+                    <!-- Campo de usuario -->
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" required>
+
+                    <!-- Campo de contraseña -->
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <!-- Botón de inicio de sesión -->
+                    <button type="submit">Iniciar Sesión</button>
+
+                    <!-- Pie de página con enlace a la empresa desarrolladora -->
+                    <p class="footer-text">
+                        <a href="https://www.makitechnology.com" target="_blank">Desarrollado por MakiTechnology</a>
+                    </p>
+
+                </form>
+
+                <!-- Mensaje de error o validación -->
+                <p id="mensaje"></p>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script externo -->
+    <script src="script.js"></script>
+</body>
+</html>
